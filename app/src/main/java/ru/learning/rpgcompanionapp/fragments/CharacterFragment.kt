@@ -3,141 +3,125 @@ package ru.learning.rpgcompanionapp.fragments
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import ru.learning.rpgcompanionapp.R
 import ru.learning.rpgcompanionapp.viewModel.CharListViewModel
+import androidx.lifecycle.lifecycleScope
+import com.google.android.material.appbar.MaterialToolbar
+import ru.learning.rpgcompanionapp.databinding.FragmentCharacterBinding
 
 
 class CharacterFragment : Fragment() {
+    private var _binding: FragmentCharacterBinding? = null
+    private val binding get() = _binding!!
+
+
     private val viewModel: CharListViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_character, container, false)
+        _binding = FragmentCharacterBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
+        toolbar.title = "TWP Companion"
+        toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
+        toolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
+
         val charId = arguments?.getInt("charId", -1) ?: -1
-        val nameText = view.findViewById<TextView>(R.id.characterNameText)
-        val raceClassLevelText = view.findViewById<TextView>(R.id.characterRaceClassLevelText)
-        val charHpText = view.findViewById<TextView>(R.id.characterHpText)
-        val charAcText = view.findViewById<TextView>(R.id.characterAcText)
-        val charSpeedText = view.findViewById<TextView>(R.id.characterSpeedText)
-        val subClassText = view.findViewById<TextView>(R.id.characterSubClass)
-        val charStrText = view.findViewById<TextView>(R.id.strengthValueText)
-        val charIntText = view.findViewById<TextView>(R.id.intelligenceValueText)
-        val charDexText = view.findViewById<TextView>(R.id.dexterityValueText)
-        val charWisText = view.findViewById<TextView>(R.id.wisdomValueText)
-        val charConText = view.findViewById<TextView>(R.id.constitutionValueText)
-        val charChaText = view.findViewById<TextView>(R.id.charismaValueText)
-        val strModText = view.findViewById<TextView>(R.id.strengthMetaText)
-        val dexModText = view.findViewById<TextView>(R.id.dexterityMetaText)
-        val conModText = view.findViewById<TextView>(R.id.constitutionMetaText)
-        val intModText = view.findViewById<TextView>(R.id.intelligenceMetaText)
-        val wisModText = view.findViewById<TextView>(R.id.wisdomMetaText)
-        val chaModText = view.findViewById<TextView>(R.id.charismaMetaText)
-        val profiencyTextView = view.findViewById<TextView>(R.id.characterProfText)
-        val hitDiceText = view.findViewById<TextView>(R.id.characterHitDiceText)
-        val saveText = view.findViewById<TextView>(R.id.characterSaveThrowText)
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.chars.collect { chars ->
+                val char = chars.find { it.charId == charId }
+
+                if (char != null) {
+                    val strMod = getModifierStat(char.charStr)
+                    val dexMod = getModifierStat(char.charDex)
+                    val conMod = getModifierStat(char.charCon)
+                    val intMod = getModifierStat(char.charInt)
+                    val wisMod = getModifierStat(char.charWis)
+                    val chaMod = getModifierStat(char.charCha)
 
 
-        val strAthleticsText = view.findViewById<TextView>(R.id.strengthAthleticsText)
+                    binding.characterNameText.text = char.charName
+                    binding.characterRaceClassLevelText.text =
+                        "${char.charRace} • ${char.charClass} • ${char.charLevel}"
+                    binding.characterSubClass.text = "Подкласс..."
+                    binding.characterSpeedText.text = "${char.charSpeed} фт."
 
-        val dexAcrobaticsText = view.findViewById<TextView>(R.id.dexterityAcrobaticsText)
-        val dexSleightOfHandText = view.findViewById<TextView>(R.id.dexteritySleightOfHandText)
-        val dexStealthText = view.findViewById<TextView>(R.id.dexterityStealthText)
+                    binding.strengthValueText.text = char.charStr.toString()
+                    binding.intelligenceValueText.text = char.charInt.toString()
+                    binding.dexterityValueText.text = char.charDex.toString()
+                    binding.wisdomValueText.text = char.charWis.toString()
+                    binding.constitutionValueText.text = char.charCon.toString()
+                    binding.charismaValueText.text = char.charCha.toString()
 
-        val intArcanaText = view.findViewById<TextView>(R.id.intelligenceArcanaText)
-        val intHistoryText = view.findViewById<TextView>(R.id.intelligenceHistoryText)
-        val intInvestigationText = view.findViewById<TextView>(R.id.intelligenceInvestigationText)
-        val intNatureText = view.findViewById<TextView>(R.id.intelligenceNatureText)
-        val intReligionText = view.findViewById<TextView>(R.id.intelligenceReligionText)
+                    binding.characterHpText.text = char.charHp.toString()
+                    binding.characterAcText.text = char.charAc.toString()
+                    binding.characterHitDiceText.text = "1к8"
 
-        val wisAnimalHandlingText = view.findViewById<TextView>(R.id.wisdomAnimalHandlingText)
-        val wisInsightText = view.findViewById<TextView>(R.id.wisdomInsightText)
-        val wisMedicineText = view.findViewById<TextView>(R.id.wisdomMedicineText)
-        val wisPerceptionText = view.findViewById<TextView>(R.id.wisdomPerceptionText)
-        val wisSurvivalText = view.findViewById<TextView>(R.id.wisdomSurvivalText)
+                    binding.strengthMetaText.text = "мод ${formatMod(strMod)} • спас ${formatMod(strMod)}"
+                    binding.dexterityMetaText.text = "мод ${formatMod(dexMod)} • спас ${formatMod(dexMod)}"
+                    binding.constitutionMetaText.text = "мод ${formatMod(conMod)} • спас ${formatMod(conMod)}"
+                    binding.intelligenceMetaText.text = "мод ${formatMod(intMod)} • спас ${formatMod(intMod)}"
+                    binding.wisdomMetaText.text = "мод ${formatMod(wisMod)} • спас ${formatMod(wisMod)}"
+                    binding.charismaMetaText.text = "мод ${formatMod(chaMod)} • спас ${formatMod(chaMod)}"
 
-        val chaDeceptionText = view.findViewById<TextView>(R.id.charismaDeceptionText)
-        val chaIntimidationText = view.findViewById<TextView>(R.id.charismaIntimidationText)
-        val chaPerformanceText = view.findViewById<TextView>(R.id.charismaPerformanceText)
-        val chaPersuasionText = view.findViewById<TextView>(R.id.charismaPersuasionText)
-        viewModel.chars.observe(viewLifecycleOwner) { chars ->
-            val char = chars.find { it.charId == charId }
+                    binding.strengthAthleticsText.text = "Атлетика ${formatMod(strMod)}"
 
-            if (char != null) {
-                val strMod = getModifierStat(char.charStr)
-                val dexMod = getModifierStat(char.charDex)
-                val conMod = getModifierStat(char.charCon)
-                val intMod = getModifierStat(char.charInt)
-                val wisMod = getModifierStat(char.charWis)
-                val chaMod = getModifierStat(char.charCha)
+                    binding.dexterityAcrobaticsText.text = "Акробатика ${formatMod(dexMod)}"
+                    binding.dexteritySleightOfHandText.text = "Ловкость рук ${formatMod(dexMod)}"
+                    binding.dexterityStealthText.text = "Скрытность ${formatMod(dexMod)}"
 
-                nameText.text = char.charName
-                raceClassLevelText.text = "${char.charRace} • ${char.charClass} • ${char.charLevel}"
-                subClassText.text = "Подкласс..."
-                charSpeedText.text = "${char.charSpeed} фт."
-                charStrText.text = char.charStr.toString()
-                charIntText.text = char.charInt.toString()
-                charDexText.text = char.charDex.toString()
-                charWisText.text = char.charWis.toString()
-                charConText.text = char.charCon.toString()
-                charChaText.text = char.charCha.toString()
-                charHpText.text = "${char.charHp}".toString()
-                charAcText.text = char.charAc.toString()
-                hitDiceText.text = "1к8"
+                    binding.intelligenceArcanaText.text = "Магия ${formatMod(intMod)}"
+                    binding.intelligenceHistoryText.text = "История ${formatMod(intMod)}"
+                    binding.intelligenceInvestigationText.text = "Расследование ${formatMod(intMod)}"
+                    binding.intelligenceNatureText.text = "Природа ${formatMod(intMod)}"
+                    binding.intelligenceReligionText.text = "Религия ${formatMod(intMod)}"
 
+                    binding.wisdomAnimalHandlingText.text = "Уход за животными ${formatMod(wisMod)}"
+                    binding.wisdomInsightText.text = "Проницательность ${formatMod(wisMod)}"
+                    binding.wisdomMedicineText.text = "Медицина ${formatMod(wisMod)}"
+                    binding.wisdomPerceptionText.text = "Восприятие ${formatMod(wisMod)}"
+                    binding.wisdomSurvivalText.text = "Выживание ${formatMod(wisMod)}"
 
+                    binding.charismaDeceptionText.text = "Обман ${formatMod(chaMod)}"
+                    binding.charismaIntimidationText.text = "Запугивание ${formatMod(chaMod)}"
+                    binding.charismaPerformanceText.text = "Выступление ${formatMod(chaMod)}"
+                    binding.charismaPersuasionText.text = "Убеждение ${formatMod(chaMod)}"
 
-
-
-                // модификаторы
-                strModText.text = "мод ${formatMod(strMod)} • спас ${formatMod(strMod)}"
-                dexModText.text = "мод ${formatMod(dexMod)} • спас ${formatMod(dexMod)}"
-                conModText.text = "мод ${formatMod(conMod)} • спас ${formatMod(conMod)}"
-                intModText.text = "мод ${formatMod(intMod)} • спас ${formatMod(intMod)}"
-                wisModText.text = "мод ${formatMod(wisMod)} • спас ${formatMod(wisMod)}"
-                chaModText.text = "мод ${formatMod(chaMod)} • спас ${formatMod(chaMod)}"
-
-                strAthleticsText.text = "Атлетика ${formatMod(strMod)}"
-
-                dexAcrobaticsText.text = "Акробатика ${formatMod(dexMod)}"
-                dexSleightOfHandText.text = "Ловкость рук ${formatMod(dexMod)}"
-                dexStealthText.text = "Скрытность ${formatMod(dexMod)}"
-
-                intArcanaText.text = "Магия ${formatMod(intMod)}"
-                intHistoryText.text = "История ${formatMod(intMod)}"
-                intInvestigationText.text = "Расследование ${formatMod(intMod)}"
-                intNatureText.text = "Природа ${formatMod(intMod)}"
-                intReligionText.text = "Религия ${formatMod(intMod)}"
-
-                wisAnimalHandlingText.text = "Уход за животными ${formatMod(wisMod)}"
-                wisInsightText.text = "Проницательность ${formatMod(wisMod)}"
-                wisMedicineText.text = "Медицина ${formatMod(wisMod)}"
-                wisPerceptionText.text = "Восприятие ${formatMod(wisMod)}"
-                wisSurvivalText.text = "Выживание ${formatMod(wisMod)}"
-
-                chaDeceptionText.text = "Обман ${formatMod(chaMod)}"
-                chaIntimidationText.text = "Запугивание ${formatMod(chaMod)}"
-                chaPerformanceText.text = "Выступление ${formatMod(chaMod)}"
-                chaPersuasionText.text = "Убеждение ${formatMod(chaMod)}"
-
-                profiencyTextView.text = "${getProficiencyBonus(char.charLevel)}"
-                saveText.text = "STR, CON"
-
-
+                    binding.characterProfText.text = getProficiencyBonus(char.charLevel).toString()
+                    binding.characterSaveThrowText.text = "STR, CON"
+                }
             }
         }
 
@@ -150,6 +134,15 @@ class CharacterFragment : Fragment() {
     private fun getModifierStat(stat: Int): Int {
         return Math.floorDiv(stat - 10, 2)
     }
+
+    override fun onDestroyView() {
+        val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
+        toolbar.navigationIcon = null
+        toolbar.setNavigationOnClickListener(null)
+        _binding = null
+        super.onDestroyView()
+    }
+
 
     private fun getProficiencyBonus(level: Int): Int{
         return when(level) {

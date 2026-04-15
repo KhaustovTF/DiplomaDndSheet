@@ -13,7 +13,8 @@
         app:title="TWP Companion"
         android:fitsSystemWindows="true"
         android:background="#6750A4"
-        android:theme="@style/ThemeOverlay.Material3.Dark"/>
+        android:theme="@style/ThemeOverlay.Material3.Dark">
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"

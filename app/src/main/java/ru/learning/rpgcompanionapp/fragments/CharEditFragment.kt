@@ -11,6 +11,7 @@ import ru.learning.rpgcompanionapp.dto.CharData
 import ru.learning.rpgcompanionapp.dto.CreateCharacterInput
 import ru.learning.rpgcompanionapp.viewModel.CharListViewModel
 import ru.learning.rpgcompanionapp.databinding.FragmentCharEditBinding
+import ru.learning.rpgcompanionapp.R
 
 class CharEditFragment : Fragment() {
 
@@ -30,6 +31,13 @@ class CharEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val toolbar = requireActivity().findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.topAppBar)
+        toolbar.title = "TWP Companion"
+        toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
+        toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
 
         binding.goBackCharEditButton.setOnClickListener {
             val input = readInput()
@@ -96,6 +104,9 @@ class CharEditFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        val toolbar = requireActivity().findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.topAppBar)
+        toolbar.navigationIcon = null
+        toolbar.setNavigationOnClickListener(null)
         _binding = null
     }
 }

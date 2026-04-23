@@ -10,10 +10,7 @@ import ru.learning.rpgcompanionapp.viewModel.AuthViewModel
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
         setSupportActionBar(findViewById(R.id.topAppBar))
-
     }
 }

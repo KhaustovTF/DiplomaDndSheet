@@ -19,21 +19,33 @@
             android:hint="Имя персонажа"
             android:inputType="textCapWords" />
 
-        <EditText
-            android:id="@+id/char_edit_text_race"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Раса"
-            android:inputType="textCapWords" />
+<!--        <EditText-->
+<!--            android:id="@+id/char_edit_text_race"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:hint="Раса"-->
+<!--            android:inputType="textCapWords" />-->
 
-        <EditText
-            android:id="@+id/char_edit_text_class"
+<!--        <EditText-->
+<!--            android:id="@+id/char_edit_text_class"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:hint="Класс"-->
+<!--            android:inputType="textCapWords" />-->
+
+        <Spinner
+            android:id="@+id/char_spinner_race"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Класс"
-            android:inputType="textCapWords" />
+            android:layout_marginTop="12dp" />
+
+        <Spinner
+            android:id="@+id/char_spinner_class"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" />
 
         <EditText
             android:id="@+id/char_edit_text_level"
@@ -114,6 +126,13 @@
             android:layout_marginTop="12dp"
             android:hint="CHA"
             android:inputType="number" />
+
+        <Button
+            android:id="@+id/selectSkillsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Выбрать навыки"
+            android:layout_marginTop="12dp"/>
 
         <Button
             android:id="@+id/go_back_char_edit_button"

@@ -16,6 +16,7 @@ data class CharData(
     val charWis: Int,
     val charCha: Int,
     val charNotes: String,
-    val charImage: String
+    val charImage: String,
+    val skills: List<String> = emptyList()
 
 )

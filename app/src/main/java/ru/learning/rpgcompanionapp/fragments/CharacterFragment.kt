@@ -1,6 +1,7 @@
 package ru.learning.rpgcompanionapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -62,7 +63,7 @@ class CharacterFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.chars.collect { chars ->
                 val char = chars.find { it.charId == charId }
-
+                Log.d("RPG_DEBUG", "skills = ${char?.skills}")
                 if (char != null) {
                     val strMod = getModifierStat(char.charStr)
                     val dexMod = getModifierStat(char.charDex)
@@ -70,6 +71,38 @@ class CharacterFragment : Fragment() {
                     val intMod = getModifierStat(char.charInt)
                     val wisMod = getModifierStat(char.charWis)
                     val chaMod = getModifierStat(char.charCha)
+
+                    val profBonus = getProficiencyBonus(char.charLevel)
+
+                    val athleticsValue = getSkillValue(char, "Athletics", strMod, profBonus)
+
+                    val acrobaticsValue = getSkillValue(char, "Acrobatics", dexMod, profBonus)
+                    val sleightOfHandValue = getSkillValue(char, "Sleight of Hand", dexMod, profBonus)
+                    val stealthValue = getSkillValue(char, "Stealth", dexMod, profBonus)
+
+                    val arcanaValue = getSkillValue(char, "Arcana", intMod, profBonus)
+                    val historyValue = getSkillValue(char, "History", intMod, profBonus)
+                    val investigationValue = getSkillValue(char, "Investigation", intMod, profBonus)
+                    val natureValue = getSkillValue(char, "Nature", intMod, profBonus)
+                    val religionValue = getSkillValue(char, "Religion", intMod, profBonus)
+
+                    val animalHandlingValue = getSkillValue(char, "Animal Handling", wisMod, profBonus)
+                    val insightValue = getSkillValue(char, "Insight", wisMod, profBonus)
+                    val medicineValue = getSkillValue(char, "Medicine", wisMod, profBonus)
+                    val perceptionValue = getSkillValue(char, "Perception", wisMod, profBonus)
+                    val survivalValue = getSkillValue(char, "Survival", wisMod, profBonus)
+
+                    val deceptionValue = getSkillValue(char, "Deception", chaMod, profBonus)
+                    val intimidationValue = getSkillValue(char, "Intimidation", chaMod, profBonus)
+                    val performanceValue = getSkillValue(char, "Performance", chaMod, profBonus)
+                    val persuasionValue = getSkillValue(char, "Persuasion", chaMod, profBonus)
+
+                    val strSave = getSaveThrowValue(char.charClass, "STR", strMod, profBonus)
+                    val dexSave = getSaveThrowValue(char.charClass, "DEX", dexMod, profBonus)
+                    val conSave = getSaveThrowValue(char.charClass, "CON", conMod, profBonus)
+                    val intSave = getSaveThrowValue(char.charClass, "INT", intMod, profBonus)
+                    val wisSave = getSaveThrowValue(char.charClass, "WIS", wisMod, profBonus)
+                    val chaSave = getSaveThrowValue(char.charClass, "CHA", chaMod, profBonus)
 
 
                     binding.characterNameText.text = char.charName
@@ -89,40 +122,54 @@ class CharacterFragment : Fragment() {
                     binding.characterAcText.text = char.charAc.toString()
                     binding.characterHitDiceText.text = "1к8"
 
-                    binding.strengthMetaText.text = "мод ${formatMod(strMod)} • спас ${formatMod(strMod)}"
-                    binding.dexterityMetaText.text = "мод ${formatMod(dexMod)} • спас ${formatMod(dexMod)}"
-                    binding.constitutionMetaText.text = "мод ${formatMod(conMod)} • спас ${formatMod(conMod)}"
-                    binding.intelligenceMetaText.text = "мод ${formatMod(intMod)} • спас ${formatMod(intMod)}"
-                    binding.wisdomMetaText.text = "мод ${formatMod(wisMod)} • спас ${formatMod(wisMod)}"
-                    binding.charismaMetaText.text = "мод ${formatMod(chaMod)} • спас ${formatMod(chaMod)}"
+                    binding.strengthMetaText.text = "мод ${formatMod(strMod)} • спас ${formatMod(strSave)}"
+                    binding.dexterityMetaText.text = "мод ${formatMod(dexMod)} • спас ${formatMod(dexSave)}"
+                    binding.constitutionMetaText.text = "мод ${formatMod(conMod)} • спас ${formatMod(conSave)}"
+                    binding.intelligenceMetaText.text = "мод ${formatMod(intMod)} • спас ${formatMod(intSave)}"
+                    binding.wisdomMetaText.text = "мод ${formatMod(wisMod)} • спас ${formatMod(wisSave)}"
+                    binding.charismaMetaText.text = "мод ${formatMod(chaMod)} • спас ${formatMod(chaSave)}"
 
-                    binding.strengthAthleticsText.text = "Атлетика ${formatMod(strMod)}"
+                    binding.strengthAthleticsText.text = "Атлетика ${formatMod(athleticsValue)}"
 
-                    binding.dexterityAcrobaticsText.text = "Акробатика ${formatMod(dexMod)}"
-                    binding.dexteritySleightOfHandText.text = "Ловкость рук ${formatMod(dexMod)}"
-                    binding.dexterityStealthText.text = "Скрытность ${formatMod(dexMod)}"
+                    binding.dexterityAcrobaticsText.text = "Акробатика ${formatMod(acrobaticsValue)}"
+                    binding.dexteritySleightOfHandText.text = "Ловкость рук ${formatMod(sleightOfHandValue)}"
+                    binding.dexterityStealthText.text = "Скрытность ${formatMod(stealthValue)}"
 
-                    binding.intelligenceArcanaText.text = "Магия ${formatMod(intMod)}"
-                    binding.intelligenceHistoryText.text = "История ${formatMod(intMod)}"
-                    binding.intelligenceInvestigationText.text = "Расследование ${formatMod(intMod)}"
-                    binding.intelligenceNatureText.text = "Природа ${formatMod(intMod)}"
-                    binding.intelligenceReligionText.text = "Религия ${formatMod(intMod)}"
+                    binding.intelligenceArcanaText.text = "Магия ${formatMod(arcanaValue)}"
+                    binding.intelligenceHistoryText.text = "История ${formatMod(historyValue)}"
+                    binding.intelligenceInvestigationText.text = "Расследование ${formatMod(investigationValue)}"
+                    binding.intelligenceNatureText.text = "Природа ${formatMod(natureValue)}"
+                    binding.intelligenceReligionText.text = "Религия ${formatMod(religionValue)}"
 
-                    binding.wisdomAnimalHandlingText.text = "Уход за животными ${formatMod(wisMod)}"
-                    binding.wisdomInsightText.text = "Проницательность ${formatMod(wisMod)}"
-                    binding.wisdomMedicineText.text = "Медицина ${formatMod(wisMod)}"
-                    binding.wisdomPerceptionText.text = "Восприятие ${formatMod(wisMod)}"
-                    binding.wisdomSurvivalText.text = "Выживание ${formatMod(wisMod)}"
+                    binding.wisdomAnimalHandlingText.text = "Уход за животными ${formatMod(animalHandlingValue)}"
+                    binding.wisdomInsightText.text = "Проницательность ${formatMod(insightValue)}"
+                    binding.wisdomMedicineText.text = "Медицина ${formatMod(medicineValue)}"
+                    binding.wisdomPerceptionText.text = "Восприятие ${formatMod(perceptionValue)}"
+                    binding.wisdomSurvivalText.text = "Выживание ${formatMod(survivalValue)}"
 
-                    binding.charismaDeceptionText.text = "Обман ${formatMod(chaMod)}"
-                    binding.charismaIntimidationText.text = "Запугивание ${formatMod(chaMod)}"
-                    binding.charismaPerformanceText.text = "Выступление ${formatMod(chaMod)}"
-                    binding.charismaPersuasionText.text = "Убеждение ${formatMod(chaMod)}"
+                    binding.charismaDeceptionText.text = "Обман ${formatMod(deceptionValue)}"
+                    binding.charismaIntimidationText.text = "Запугивание ${formatMod(intimidationValue)}"
+                    binding.charismaPerformanceText.text = "Выступление ${formatMod(performanceValue)}"
+                    binding.charismaPersuasionText.text = "Убеждение ${formatMod(persuasionValue)}"
 
-                    binding.characterProfText.text = getProficiencyBonus(char.charLevel).toString()
-                    binding.characterSaveThrowText.text = "STR, CON"
+                    binding.characterProfText.text = formatMod(profBonus)
+                    binding.characterSaveThrowText.text = getSaveThrowNames(char.charClass)
+
+                    binding.deleteCharacterButton.setOnClickListener {
+                        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                            .setTitle("Удалить персонажа?")
+                            .setMessage("Это действие нельзя отменить.")
+                            .setPositiveButton("Удалить") { _, _ ->
+                                viewModel.deleteChar(char.charId)
+                                requireActivity().onBackPressedDispatcher.onBackPressed()
+                            }
+                            .setNegativeButton("Отмена", null)
+                            .show()
+                    }
                 }
+
             }
+
         }
 
     }
@@ -143,6 +190,18 @@ class CharacterFragment : Fragment() {
         super.onDestroyView()
     }
 
+    private fun getSkillValue(
+        char: ru.learning.rpgcompanionapp.dto.CharData,
+        skillApiName: String,
+        statMod: Int,
+        proficiencyBonus: Int
+    ): Int {
+        return if (char.skills.contains(skillApiName)) {
+            statMod + proficiencyBonus
+        } else {
+            statMod
+        }
+    }
 
     private fun getProficiencyBonus(level: Int): Int{
         return when(level) {
@@ -151,6 +210,64 @@ class CharacterFragment : Fragment() {
             in 9..12 -> 4
             in 13..16 -> 5
             else -> 6
+        }
+    }
+
+    private fun getSaveThrowNames(charClass: String): String {
+        return when (charClass.lowercase()) {
+            "barbarian", "варвар" -> "СИЛ, ТЕЛ"
+            "bard", "бард" -> "ЛОВ, ХАР"
+            "cleric", "жрец" -> "МДР, ХАР"
+            "druid", "друид" -> "ИНТ, МДР"
+            "fighter", "воин" -> "СИЛ, ТЕЛ"
+            "monk", "монах" -> "СИЛ, ЛОВ"
+            "paladin", "паладин" -> "МДР, ХАР"
+            "ranger", "следопыт" -> "СИЛ, ЛОВ"
+            "rogue", "плут" -> "ЛОВ, ИНТ"
+            "sorcerer", "чародей" -> "ТЕЛ, ХАР"
+            "warlock", "колдун" -> "МДР, ХАР"
+            "wizzard", "волшебник" -> "ИНТ, МДР"
+            else -> "—"
+        }
+    }
+
+    private fun hasSaveThrowProficiency(charClass: String, statCode: String): Boolean {
+        return when (charClass.lowercase()) {
+            "barbarian", "варвар" -> statCode == "STR" || statCode == "CON"
+            "bard", "бард" -> statCode == "DEX" || statCode == "CHA"
+            "cleric", "жрец" -> statCode == "WIS" || statCode == "CHA"
+            "druid", "друид" -> statCode == "INT" || statCode == "WIS"
+            "fighter", "воин" -> statCode == "STR" || statCode == "CON"
+            "monk", "монах" -> statCode == "STR" || statCode == "DEX"
+            "paladin", "паладин" -> statCode == "WIS" || statCode == "CHA"
+            "ranger", "следопыт" -> statCode == "STR" || statCode == "DEX"
+            "rogue", "плут" -> statCode == "DEX" || statCode == "INT"
+            "sorcerer", "чародей" -> statCode == "CON" || statCode == "CHA"
+            "warlock", "колдун" -> statCode == "WIS" || statCode == "CHA"
+            "wizard","wizzard", "волшебник" -> statCode == "INT" || statCode == "WIS"
+            else -> false
+        }
+    }
+
+    private fun getSaveThrowValue(
+        charClass: String,
+        statCode: String,
+        statMod: Int,
+        proficiencyBonus: Int
+    ): Int {
+        return if (hasSaveThrowProficiency(charClass, statCode)) {
+            statMod + proficiencyBonus
+        } else {
+            statMod
+        }
+    }
+
+    private fun hasSkillProficiency(charClass: String, skill: String): Boolean {
+        return when (charClass.lowercase()) {
+            "fighter", "воин" -> skill in listOf("athletics", "perception")
+            "rogue", "плут" -> skill in listOf("stealth", "acrobatics")
+            "wizard", "волшебник" -> skill in listOf("arcana", "history")
+            else -> false
         }
     }
 }

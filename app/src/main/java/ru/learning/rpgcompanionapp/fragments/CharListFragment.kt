@@ -42,6 +42,10 @@ class CharListFragment : Fragment() {
         val button = view.findViewById<FloatingActionButton>(R.id.create_Char_Fab)
         val recyclerView = view.findViewById<RecyclerView>(R.id.charRecyclerViewXML)
 
+
+
+
+
         val charAdapter = CharAdapter { char ->
             findNavController().navigate(
                 R.id.action_charListFragment_to_characterFragment,
@@ -61,5 +65,10 @@ class CharListFragment : Fragment() {
                 charAdapter.submitList(chars)
             }
         }
+
+        android.util.Log.d("RPG_DEBUG", "classes = ${viewModel.debugClassesCount()}")
+        android.util.Log.d("RPG_DEBUG", "races = ${viewModel.debugRacesCount()}")
+        android.util.Log.d("RPG_DEBUG", "skills = ${viewModel.debugSkillsCount()}")
+
     }
 }

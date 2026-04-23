@@ -12,11 +12,14 @@ import ru.learning.rpgcompanionapp.dto.CreateCharacterInput
 import ru.learning.rpgcompanionapp.viewModel.CharListViewModel
 import ru.learning.rpgcompanionapp.databinding.FragmentCharEditBinding
 import ru.learning.rpgcompanionapp.R
+import android.widget.ArrayAdapter
+import ru.learning.rpgcompanionapp.utils.translateClassName
+import ru.learning.rpgcompanionapp.utils.translateRaceName
 
 class CharEditFragment : Fragment() {
 
     private val viewModel: CharListViewModel by activityViewModels()
-
+    private val selectedSkills = mutableListOf<String>()
     private var _binding: FragmentCharEditBinding? = null
     private val binding get() = _binding!!
 
@@ -33,17 +36,79 @@ class CharEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val toolbar = requireActivity().findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.topAppBar)
-        toolbar.title = "TWP Companion"
+        toolbar.title = "Создание персонажа"
         toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
         toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
+        }
+
+        val raceItems = viewModel.getLoadedRaces()
+        val classItems = viewModel.getLoadedClasses()
+
+        val raceNames = if (raceItems.isNotEmpty()) {
+            raceItems.map { translateRaceName(it.name) }
+        } else {
+            listOf("Без Расы")
+        }
+
+        val classNames = if (classItems.isNotEmpty()) {
+            classItems.map { translateClassName(it.name) }
+        } else {
+            listOf("Без Класса")
+        }
+        binding.selectSkillsButton.setOnClickListener {
+            val skillNames = viewModel.getLoadedSkills().map { it.name }
+            val checkedItems = BooleanArray(skillNames.size) { index ->
+                selectedSkills.contains(skillNames[index])
+            }
+
+            androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setTitle("Выбери навыки")
+                .setMultiChoiceItems(
+                    skillNames.toTypedArray(),
+                    checkedItems
+                ) { _, which, isChecked ->
+                    val selectedSkill = skillNames[which]
+
+                    if (isChecked) {
+                        if (!selectedSkills.contains(selectedSkill)) {
+                            selectedSkills.add(selectedSkill)
+                        }
+                    } else {
+                        selectedSkills.remove(selectedSkill)
+                    }
+                }
+                .setPositiveButton("OK") { _, _ ->
+                    binding.selectSkillsButton.text =
+                        if (selectedSkills.isEmpty()) {
+                            "Выбрать навыки"
+                        } else {
+                            "Навыки: ${selectedSkills.size}"
+                        }
+                }
+                .show()
+        }
+        binding.charSpinnerRace.adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            raceNames
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+
+        binding.charSpinnerClass.adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            classNames
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
 
         binding.goBackCharEditButton.setOnClickListener {
             val input = readInput()
-            val char = buildCharacter(input)
-            viewModel.addChar(char)
-            findNavController().popBackStack()
+            val character = buildCharacter(input)
+            viewModel.addChar(character)
+            findNavController().navigateUp()
         }
     }
 
@@ -64,15 +129,16 @@ class CharEditFragment : Fragment() {
             charWis = input.wis,
             charCha = input.cha,
             charNotes = "",
-            charImage = ""
+            charImage = "",
+            skills = selectedSkills . toList ()
         )
     }
 
     private fun readInput(): CreateCharacterInput {
         val name = binding.charEditTextName.text.toString().ifBlank { "Без Имени" }
-        val race = binding.charEditTextRace.text.toString().ifBlank { "Без Расы" }
+        val race = binding.charSpinnerRace.selectedItem?.toString() ?: "Без Расы"
         val level = binding.charEditTextLevel.text.toString().toIntOrNull() ?: 1
-        val className = binding.charEditTextClass.text.toString().ifEmpty { "Без Класса" }
+        val className = binding.charSpinnerClass.selectedItem?.toString() ?: "Без Класса"
 
         val hp = binding.charEditTextHp.text.toString().toIntOrNull() ?: 1
         val ac = binding.charEditTextAc.text.toString().toIntOrNull() ?: 10
@@ -104,9 +170,11 @@ class CharEditFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        val toolbar = requireActivity().findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.topAppBar)
+        val toolbar =
+            requireActivity().findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.topAppBar)
         toolbar.navigationIcon = null
         toolbar.setNavigationOnClickListener(null)
         _binding = null
     }
+
 }

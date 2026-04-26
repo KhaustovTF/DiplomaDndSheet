@@ -1,7 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.RpgCompanionApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:windowBackground">#F7F7F7</item>
+        <item name="android:windowBackground">@color/tavern_bg</item>
+        <item name="colorPrimary">@color/tavern_gold</item>
+        <item name="colorOnPrimary">@color/tavern_bg</item>
+        <item name="colorSecondary">@color/tavern_surface_light</item>
+        <item name="colorOnSecondary">@color/tavern_text</item>
+        <item name="android:textColorPrimary">@color/tavern_text</item>
     </style>
 
     <style name="Theme.RpgCompanionApp" parent="Base.Theme.RpgCompanionApp" />

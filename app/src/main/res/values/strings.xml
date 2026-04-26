@@ -25,4 +25,11 @@
     <string name="charisma">Charisma</string>
     <string name="skills">Skills</string>
     <string name="saving_throws">Saving throws</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_button">Login</string>
+    <string name="fab_add_character">Add character</string>
+    <string name="fab_open_settings">Open settings</string>
+    <string name="login_fill_fields">Fill in all fields</string>
+    <string name="login_mock_message">Login screen is ready, real request disabled for now</string>
 </resources>

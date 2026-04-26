@@ -9,6 +9,7 @@ import ru.learning.rpgcompanionapp.databinding.FragmentLoginBinding
 import androidx.lifecycle.ViewModelProvider
 import android.widget.Toast
 import ru.learning.rpgcompanionapp.viewModel.AuthViewModel
+import ru.learning.rpgcompanionapp.R
 
 class LoginFragment : Fragment() {
 
@@ -40,13 +41,13 @@ class LoginFragment : Fragment() {
             val password = binding.passwordInput.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(requireContext(), "Fill in all fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.login_fill_fields), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             Toast.makeText(
                 requireContext(),
-                "Login screen is ready, real request disabled for now",
+                getString(R.string.login_mock_message),
                 Toast.LENGTH_SHORT
             ).show()
         }

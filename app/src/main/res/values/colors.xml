@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="tavern_bg">#14100F</color>
+    <color name="tavern_surface">#241A18</color>
+    <color name="tavern_surface_light">#352723</color>
+    <color name="tavern_gold">#D6A95C</color>
+    <color name="tavern_text">#F3E9DA</color>
+    <color name="tavern_text_muted">#CCBEA7</color>
 </resources>

@@ -28,4 +28,9 @@
         android:label="fragment_character"
         tools:layout="@layout/fragment_character" />
 
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="ru.learning.rpgcompanionapp.fragments.SettingsFragment"
+        android:label="@string/settings_title" />
+
 </navigation>

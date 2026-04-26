@@ -42,7 +42,10 @@ class CharListFragment : Fragment() {
         val button = view.findViewById<FloatingActionButton>(R.id.create_Char_Fab)
         val recyclerView = view.findViewById<RecyclerView>(R.id.charRecyclerViewXML)
 
-
+        val settingsButton = view.findViewById<FloatingActionButton>(R.id.settingsFab)
+        settingsButton.setOnClickListener {
+            findNavController().navigate(R.id.settingsFragment)
+        }
 
 
 

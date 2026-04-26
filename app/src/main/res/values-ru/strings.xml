@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TWP Companion</string>
+    <string name="settings">Настройки</string>
+    <string name="settings_title">Настройки</string>
+    <string name="theme">Тема</string>
+    <string name="language">Язык</string>
+    <string name="back">Назад</string>
+    <string name="system">Как в системе</string>
+    <string name="light">Светлая</string>
+    <string name="dark">Тёмная</string>
+    <string name="russian">Русский</string>
+    <string name="english">Английский</string>
+    <string name="create_character">Создать персонажа</string>
+    <string name="character_name">Имя персонажа</string>
+    <string name="race">Раса</string>
+    <string name="class_name">Класс</string>
+    <string name="level">Уровень</string>
+    <string name="strength">Сила</string>
+    <string name="dexterity">Ловкость</string>
+    <string name="constitution">Телосложение</string>
+    <string name="intelligence">Интеллект</string>
+    <string name="wisdom">Мудрость</string>
+    <string name="charisma">Харизма</string>
+    <string name="skills">Навыки</string>
+    <string name="saving_throws">Спасброски</string>
+
+</resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/rootLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -13,8 +14,7 @@
         app:title="TWP Companion"
         android:fitsSystemWindows="true"
         android:background="#6750A4"
-        android:theme="@style/ThemeOverlay.Material3.Dark">
-    </com.google.android.material.appbar.MaterialToolbar>
+        android:theme="@style/ThemeOverlay.Material3.Dark" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"

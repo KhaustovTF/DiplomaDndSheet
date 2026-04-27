@@ -167,7 +167,7 @@ class CharEditFragment : Fragment() {
             cha = cha
         )
     }
-
+// r
     override fun onDestroyView() {
         super.onDestroyView()
         val toolbar =

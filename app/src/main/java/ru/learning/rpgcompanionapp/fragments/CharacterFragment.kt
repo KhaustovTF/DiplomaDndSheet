@@ -14,7 +14,7 @@ import ru.learning.rpgcompanionapp.viewModel.CharListViewModel
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import ru.learning.rpgcompanionapp.databinding.FragmentCharacterBinding
-
+import ru.learning.rpgcompanionapp.utils.DndRules
 
 class CharacterFragment : Fragment() {
     private var _binding: FragmentCharacterBinding? = null
@@ -65,14 +65,14 @@ class CharacterFragment : Fragment() {
                 val char = chars.find { it.charId == charId }
                 Log.d("RPG_DEBUG", "skills = ${char?.skills}")
                 if (char != null) {
-                    val strMod = getModifierStat(char.charStr)
-                    val dexMod = getModifierStat(char.charDex)
-                    val conMod = getModifierStat(char.charCon)
-                    val intMod = getModifierStat(char.charInt)
-                    val wisMod = getModifierStat(char.charWis)
-                    val chaMod = getModifierStat(char.charCha)
+                    val strMod = DndRules.getModifierStat(char.charStr)
+                    val dexMod = DndRules.getModifierStat(char.charStr)
+                    val conMod = DndRules.getModifierStat(char.charStr)
+                    val intMod = DndRules.getModifierStat(char.charStr)
+                    val wisMod = DndRules.getModifierStat(char.charStr)
+                    val chaMod = DndRules.getModifierStat(char.charStr)
 
-                    val profBonus = getProficiencyBonus(char.charLevel)
+                    val profBonus = DndRules.getProficiencyBonus(char.charLevel)
 
                     val athleticsValue = getSkillValue(char, "Athletics", strMod, profBonus)
 
@@ -178,9 +178,6 @@ class CharacterFragment : Fragment() {
         return if (mod >= 0) "+$mod" else "$mod"
     }
 
-    private fun getModifierStat(stat: Int): Int {
-        return Math.floorDiv(stat - 10, 2)
-    }
 
     override fun onDestroyView() {
         val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
@@ -203,15 +200,6 @@ class CharacterFragment : Fragment() {
         }
     }
 
-    private fun getProficiencyBonus(level: Int): Int{
-        return when(level) {
-            in 1..4 -> 2
-            in 5..8 -> 3
-            in 9..12 -> 4
-            in 13..16 -> 5
-            else -> 6
-        }
-    }
 
     private fun getSaveThrowNames(charClass: String): String {
         return when (charClass.lowercase()) {

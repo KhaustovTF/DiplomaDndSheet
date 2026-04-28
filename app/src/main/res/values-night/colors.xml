@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="screen_bg">#14100F</color>
+    <color name="panel_bg">#241A18</color>
+    <color name="main_text">#F3E9DA</color>
+    <color name="muted_text">#CCBEA7</color>
+    <color name="accent_color">#D6A95C</color>
+    <color name="button_text">#14100F</color>
+</resources>

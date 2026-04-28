@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_screen_tavern"
+    android:background="@color/screen_bg"
     android:fillViewport="true">
 
     <LinearLayout
@@ -18,23 +18,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/back"
-            android:textColor="@color/tavern_gold"
-            app:strokeColor="@color/tavern_gold" />
+            android:textColor="@color/accent_color"
+            app:strokeColor="@color/accent_color" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/settings_title"
-            android:textColor="@color/tavern_text"
+            android:textColor="@color/main_text"
             android:textSize="24sp"
             android:textStyle="bold" />
 
+        <!-- THEME BLOCK -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:background="@drawable/bg_panel_tavern"
+            android:background="@color/panel_bg"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -42,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/theme"
-                android:textColor="@color/tavern_gold"
+                android:textColor="@color/accent_color"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -58,30 +59,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/system"
-                    android:textColor="@color/tavern_text" />
+                    android:textColor="@color/main_text" />
 
                 <RadioButton
                     android:id="@+id/themeLight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/light"
-                    android:textColor="@color/tavern_text" />
+                    android:textColor="@color/main_text" />
 
                 <RadioButton
                     android:id="@+id/themeDark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dark"
-                    android:textColor="@color/tavern_text" />
+                    android:textColor="@color/main_text" />
 
             </RadioGroup>
         </LinearLayout>
 
+        <!-- LANGUAGE BLOCK -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/bg_panel_tavern"
+            android:background="@color/panel_bg"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -89,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/language"
-                android:textColor="@color/tavern_gold"
+                android:textColor="@color/accent_color"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -105,14 +107,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/russian"
-                    android:textColor="@color/tavern_text" />
+                    android:textColor="@color/main_text" />
 
                 <RadioButton
                     android:id="@+id/languageEn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/english"
-                    android:textColor="@color/tavern_text" />
+                    android:textColor="@color/main_text" />
 
             </RadioGroup>
         </LinearLayout>

@@ -6,10 +6,10 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="6dp"
-    app:cardBackgroundColor="@color/tavern_surface"
+    app:cardBackgroundColor="@color/panel_bg"
     app:cardCornerRadius="14dp"
     app:cardElevation="3dp"
-    app:strokeColor="@color/tavern_gold"
+    app:strokeColor="@color/accent_color"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -20,10 +20,11 @@
         android:padding="12dp">
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/avatarImageView"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/test_char_avatar_image"
+            android:src="@mipmap/ic_launcher"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small" />
 
         <LinearLayout
@@ -38,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
-                android:textColor="@color/tavern_text"
+                android:textColor="@color/main_text"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
 
@@ -48,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:alpha="0.9"
                 android:text="Race • Class • Level 1"
-                android:textColor="@color/tavern_text_muted"
+                android:textColor="@color/muted_text"
                 android:textSize="14sp"/>
 
         </LinearLayout>

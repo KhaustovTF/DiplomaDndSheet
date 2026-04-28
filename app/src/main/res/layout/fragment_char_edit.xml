@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F7F7F7"
     tools:context=".fragments.CharEditFragment">
 
     <LinearLayout
@@ -16,7 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:textColor="@color/main_text"
+            android:textColorHint="@color/muted_text"
             android:hint="Имя персонажа"
+
             android:inputType="textCapWords" />
 
 <!--        <EditText-->
@@ -52,7 +56,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:textColor="@color/main_text"
+            android:textColorHint="@color/muted_text"
             android:hint="Уровень"
+
             android:inputType="number" />
 
         <EditText
@@ -60,7 +67,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:textColor="@color/main_text"
+            android:textColorHint="@color/muted_text"
             android:hint="HP"
+
             android:inputType="number" />
 
         <EditText
@@ -68,7 +78,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:textColor="@color/main_text"
+            android:textColorHint="@color/muted_text"
             android:hint="КД"
+
             android:inputType="number" />
 
         <EditText
@@ -76,6 +89,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:textColor="@color/main_text"
+            android:textColorHint="@color/muted_text"
             android:hint="Скорость"
             android:inputType="number" />
 
@@ -84,6 +99,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:textColor="@color/main_text"
+            android:textColorHint="@color/muted_text"
             android:hint="STR"
             android:inputType="number" />
 
@@ -92,6 +109,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:textColor="@color/main_text"
+            android:textColorHint="@color/muted_text"
             android:hint="DEX"
             android:inputType="number" />
 
@@ -100,6 +119,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:textColor="@color/main_text"
+            android:textColorHint="@color/muted_text"
             android:hint="CON"
             android:inputType="number" />
 
@@ -108,6 +129,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:textColor="@color/main_text"
+            android:textColorHint="@color/muted_text"
             android:hint="INT"
             android:inputType="number" />
 
@@ -116,6 +139,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:textColor="@color/main_text"
+            android:textColorHint="@color/muted_text"
             android:hint="WIS"
             android:inputType="number" />
 
@@ -124,13 +149,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:textColor="@color/main_text"
+            android:textColorHint="@color/muted_text"
             android:hint="CHA"
             android:inputType="number" />
+        <ImageView
+            android:id="@+id/avatarPreviewImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher" />
+        <Button
+            android:id="@+id/selectAvatarButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/button_text"
+            android:backgroundTint="@color/accent_color"
+            android:text="Выбрать аватар" />
 
         <Button
             android:id="@+id/selectSkillsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/button_text"
+            android:backgroundTint="@color/accent_color"
             android:text="Выбрать навыки"
             android:layout_marginTop="12dp"/>
 
@@ -138,6 +182,8 @@
             android:id="@+id/go_back_char_edit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/button_text"
+            android:backgroundTint="@color/accent_color"
             android:layout_marginTop="20dp"
             android:text="Сохранить персонажа" />
 

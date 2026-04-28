@@ -24,5 +24,6 @@ data class CharacterEntity(
     val wis: Int,
     val cha: Int,
 
-    val skillsJson: String
+    val skillsJson: String,
+    val charImage: String
 )

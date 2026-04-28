@@ -13,8 +13,11 @@ import ru.learning.rpgcompanionapp.viewModel.CharListViewModel
 import ru.learning.rpgcompanionapp.databinding.FragmentCharEditBinding
 import ru.learning.rpgcompanionapp.R
 import android.widget.ArrayAdapter
+import android.widget.Button
 import ru.learning.rpgcompanionapp.utils.translateClassName
 import ru.learning.rpgcompanionapp.utils.translateRaceName
+import android.content.Intent
+import android.net.Uri
 
 class CharEditFragment : Fragment() {
 
@@ -22,7 +25,20 @@ class CharEditFragment : Fragment() {
     private val selectedSkills = mutableListOf<String>()
     private var _binding: FragmentCharEditBinding? = null
     private val binding get() = _binding!!
+    private var avatarUri: String? = null
+    private val pickImageLauncher =
+        registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocument()) { uri ->
+            if (uri != null) {
+                requireContext().contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
 
+                avatarUri = uri.toString()
+                binding.avatarPreviewImage.setImageURI(uri)
+                binding.selectAvatarButton.text = "Аватар выбран ✓"
+            }
+        }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,6 +50,12 @@ class CharEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val avatarButton = view.findViewById<Button>(R.id.selectAvatarButton)
+
+        binding.selectAvatarButton.setOnClickListener {
+            pickImageLauncher.launch(arrayOf("image/*"))
+        }
 
         val toolbar = requireActivity().findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.topAppBar)
         toolbar.title = "Создание персонажа"
@@ -113,6 +135,7 @@ class CharEditFragment : Fragment() {
     }
 
     private fun buildCharacter(input: CreateCharacterInput): CharData {
+        android.util.Log.d("RPG_AVAVATAR", "avatarUri = $avatarUri")
         return CharData(
             charId = 0,
             charName = input.name,
@@ -129,7 +152,7 @@ class CharEditFragment : Fragment() {
             charWis = input.wis,
             charCha = input.cha,
             charNotes = "",
-            charImage = "",
+            charImage = avatarUri ?: "",
             skills = selectedSkills . toList ()
         )
     }

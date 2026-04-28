@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import ru.learning.rpgcompanionapp.databinding.FragmentCharacterBinding
 import ru.learning.rpgcompanionapp.utils.DndRules
+import android.net.Uri
 
 class CharacterFragment : Fragment() {
     private var _binding: FragmentCharacterBinding? = null
@@ -106,6 +107,11 @@ class CharacterFragment : Fragment() {
 
 
                     binding.characterNameText.text = char.charName
+
+                    if (char.charImage.isNotBlank()) {
+                        binding.avatarImageView.setImageURI(Uri.parse(char.charImage))
+                    }
+
                     binding.characterRaceClassLevelText.text =
                         "${char.charRace} • ${char.charClass} • ${char.charLevel}"
                     binding.characterSubClass.text = "Подкласс..."

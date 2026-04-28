@@ -24,9 +24,10 @@
                 android:padding="16dp">
 
                 <ImageView
+                    android:id="@+id/avatarImageView"
                     android:layout_width="72dp"
                     android:layout_height="72dp"
-                    android:src="@drawable/test_char_avatar_image"
+                    android:src="@mipmap/ic_launcher"
                     android:scaleType="centerCrop"/>
 
                 <LinearLayout

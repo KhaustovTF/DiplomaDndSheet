@@ -3,6 +3,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="screen_bg">#F7F7F7</color>
+    <color name="panel_bg">#FFFFFF</color>
+    <color name="main_text">#111111</color>
+    <color name="muted_text">#666666</color>
+    <color name="accent_color">#6750A4</color>
+    <color name="button_text">#FFFFFF</color>
+
     <color name="tavern_bg">#14100F</color>
     <color name="tavern_surface">#241A18</color>
     <color name="tavern_surface_light">#352723</color>

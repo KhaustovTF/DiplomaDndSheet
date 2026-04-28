@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_screen_tavern"
+    android:background="@color/screen_bg"
     tools:context=".fragments.CharListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -18,25 +18,25 @@
         android:paddingBottom="88dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/create_Char_Fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/fab_add_character"
-        android:tint="@color/tavern_bg"
-        app:backgroundTint="@color/tavern_gold"
-        app:srcCompat="@android:drawable/ic_input_add" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/settingsFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
         android:layout_margin="16dp"
         android:contentDescription="@string/fab_open_settings"
-        android:tint="@color/tavern_bg"
-        app:backgroundTint="@color/tavern_gold"
+        app:backgroundTint="@color/accent_color"
+        app:tint="@color/button_text"
         app:srcCompat="@android:drawable/ic_menu_manage" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/create_Char_Fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/fab_add_character"
+        app:backgroundTint="@color/accent_color"
+        app:tint="@color/button_text"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </FrameLayout>

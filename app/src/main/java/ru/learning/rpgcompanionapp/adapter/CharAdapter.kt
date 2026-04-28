@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import ru.learning.rpgcompanionapp.R
+import android.net.Uri
 
 class CharAdapter(
     private val onCharClick: (CharData) -> Unit
@@ -18,6 +19,8 @@ class CharAdapter(
     class CharViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameText = itemView.findViewById<TextView>(R.id.charItemNameText)
         val infoText = itemView.findViewById<TextView>(R.id.charItemInfoText)
+        val avatarImageView =
+            itemView.findViewById<com.google.android.material.imageview.ShapeableImageView>(R.id.avatarImageView)
     }
 
     fun submitList(list: List<CharData>) {
@@ -33,6 +36,14 @@ class CharAdapter(
 
         val char = chars[position]
 
+        val imageUri = char.charImage
+
+        if (char.charImage.isNotBlank()) {
+            holder.avatarImageView.setImageURI(Uri.parse(char.charImage))
+        } else {
+            holder.avatarImageView.setImageResource(R.drawable.test_char_avatar_image)
+        }
+
         holder.nameText.text = char.charName
         holder.infoText.text = "${char.charRace} • ${char.charClass} • level ${char.charLevel}"
 
@@ -42,6 +53,7 @@ class CharAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharViewHolder {
+
 
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_character, parent, false)

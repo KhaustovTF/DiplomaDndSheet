@@ -20,7 +20,7 @@ fun CharacterEntity.toCharData(): CharData {
         charWis = wis,
         charCha = cha,
         charNotes = "",
-        charImage = "",
+        charImage = charImage,
         skills = if (skillsJson.isBlank()) emptyList() else skillsJson.split("|")
     )
 }
@@ -41,6 +41,7 @@ fun CharData.toEntity(): CharacterEntity {
         intStat = charInt,
         wis = charWis,
         cha = charCha,
-        skillsJson = skills.joinToString("|")
+        skillsJson = skills.joinToString("|"),
+        charImage = charImage
     )
 }

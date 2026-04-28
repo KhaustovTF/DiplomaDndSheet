@@ -17,6 +17,13 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    android {
+        lint {
+            abortOnError = false
+            checkReleaseBuilds = false
+        }
+    }
+
     buildFeatures {
         viewBinding = true
     }

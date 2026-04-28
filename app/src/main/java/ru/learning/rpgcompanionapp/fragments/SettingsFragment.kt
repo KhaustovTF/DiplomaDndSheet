@@ -8,6 +8,10 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import ru.learning.rpgcompanionapp.R
 import androidx.core.os.LocaleListCompat
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import ru.learning.rpgcompanionapp.network.RetrofitInstance
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
@@ -19,6 +23,23 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         val backButton = view.findViewById<Button>(R.id.backButton)
         val themeRadioGroup = view.findViewById<RadioGroup>(R.id.themeRadioGroup)
         val languageRadioGroup = view.findViewById<RadioGroup>(R.id.languageRadioGroup)
+        val testServerButton = view.findViewById<Button>(R.id.testServerButton)
+
+        testServerButton.setOnClickListener {
+            lifecycleScope.launch {
+                try {
+                    val response = RetrofitInstance.diplomaApi.ping()
+
+                    if (response.isSuccessful) {
+                        Toast.makeText(requireContext(), "Сервер ответил ✔", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "Ошибка сервера: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(requireContext(), "Ошибка сети: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 
         backButton.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()

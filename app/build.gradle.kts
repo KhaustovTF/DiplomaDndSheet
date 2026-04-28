@@ -15,17 +15,19 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "API_KEY", "\"c1378193-bc0e-42c8-a502-b8d66d189617\"")
+        buildConfigField("String", "BASE_URL", "\"http://94.228.125.136:8080/\"")
     }
 
-    android {
-        lint {
-            abortOnError = false
-            checkReleaseBuilds = false
-        }
+    lint {
+        abortOnError = false
+        checkReleaseBuilds = false
     }
+
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     buildTypes {

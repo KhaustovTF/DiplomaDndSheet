@@ -36,8 +36,6 @@ class CharAdapter(
 
         val char = chars[position]
 
-        val imageUri = char.charImage
-
         if (char.charImage.isNotBlank()) {
             holder.avatarImageView.setImageURI(Uri.parse(char.charImage))
         } else {

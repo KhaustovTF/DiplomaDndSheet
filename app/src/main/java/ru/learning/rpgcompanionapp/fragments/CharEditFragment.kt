@@ -1,23 +1,22 @@
 package ru.learning.rpgcompanionapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import ru.learning.rpgcompanionapp.R
+import ru.learning.rpgcompanionapp.databinding.FragmentCharEditBinding
 import ru.learning.rpgcompanionapp.dto.CharData
 import ru.learning.rpgcompanionapp.dto.CreateCharacterInput
-import ru.learning.rpgcompanionapp.viewModel.CharListViewModel
-import ru.learning.rpgcompanionapp.databinding.FragmentCharEditBinding
-import ru.learning.rpgcompanionapp.R
-import android.widget.ArrayAdapter
-import android.widget.Button
 import ru.learning.rpgcompanionapp.utils.translateClassName
 import ru.learning.rpgcompanionapp.utils.translateRaceName
-import android.content.Intent
-import android.net.Uri
+import ru.learning.rpgcompanionapp.viewModel.CharListViewModel
 
 class CharEditFragment : Fragment() {
 
@@ -51,7 +50,6 @@ class CharEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val avatarButton = view.findViewById<Button>(R.id.selectAvatarButton)
 
         binding.selectAvatarButton.setOnClickListener {
             pickImageLauncher.launch(arrayOf("image/*"))

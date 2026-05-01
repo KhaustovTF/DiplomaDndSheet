@@ -23,11 +23,7 @@ class CharListFragment : Fragment() {
 
     private val viewModel: CharListViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
 
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

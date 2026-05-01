@@ -1,21 +1,19 @@
 package ru.learning.rpgcompanionapp.fragments
 
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import ru.learning.rpgcompanionapp.R
-import ru.learning.rpgcompanionapp.viewModel.CharListViewModel
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
+import ru.learning.rpgcompanionapp.R
 import ru.learning.rpgcompanionapp.databinding.FragmentCharacterBinding
 import ru.learning.rpgcompanionapp.utils.DndRules
-import android.net.Uri
+import ru.learning.rpgcompanionapp.viewModel.CharListViewModel
 
 class CharacterFragment : Fragment() {
     private var _binding: FragmentCharacterBinding? = null
@@ -23,17 +21,13 @@ class CharacterFragment : Fragment() {
 
 
     private val viewModel: CharListViewModel by activityViewModels()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCharacterBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -64,7 +58,6 @@ class CharacterFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.chars.collect { chars ->
                 val char = chars.find { it.charId == charId }
-                Log.d("RPG_DEBUG", "skills = ${char?.skills}")
                 if (char != null) {
                     val strMod = DndRules.getModifierStat(char.charStr)
                     val dexMod = DndRules.getModifierStat(char.charStr)
@@ -256,12 +249,4 @@ class CharacterFragment : Fragment() {
         }
     }
 
-    private fun hasSkillProficiency(charClass: String, skill: String): Boolean {
-        return when (charClass.lowercase()) {
-            "fighter", "воин" -> skill in listOf("athletics", "perception")
-            "rogue", "плут" -> skill in listOf("stealth", "acrobatics")
-            "wizard", "волшебник" -> skill in listOf("arcana", "history")
-            else -> false
-        }
-    }
 }

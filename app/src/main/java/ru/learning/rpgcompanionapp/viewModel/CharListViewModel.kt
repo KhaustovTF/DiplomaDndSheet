@@ -13,7 +13,6 @@ class CharListViewModel(application: Application) : AndroidViewModel(application
     private val repository = CharRepository(application)
 
     val chars = repository.chars
-    val races = repository.races
     val skills = repository.skills
     val classes = repository.classes
 

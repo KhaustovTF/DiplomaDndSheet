@@ -60,11 +60,11 @@ class CharacterFragment : Fragment() {
                 val char = chars.find { it.charId == charId }
                 if (char != null) {
                     val strMod = DndRules.getModifierStat(char.charStr)
-                    val dexMod = DndRules.getModifierStat(char.charStr)
-                    val conMod = DndRules.getModifierStat(char.charStr)
-                    val intMod = DndRules.getModifierStat(char.charStr)
-                    val wisMod = DndRules.getModifierStat(char.charStr)
-                    val chaMod = DndRules.getModifierStat(char.charStr)
+                    val dexMod = DndRules.getModifierStat(char.charDex)
+                    val conMod = DndRules.getModifierStat(char.charCon)
+                    val intMod = DndRules.getModifierStat(char.charInt)
+                    val wisMod = DndRules.getModifierStat(char.charWis)
+                    val chaMod = DndRules.getModifierStat(char.charCha)
 
                     val profBonus = DndRules.getProficiencyBonus(char.charLevel)
 
